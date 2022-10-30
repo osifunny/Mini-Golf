@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     Renderer[] arrowRends;
     int shootCount = 0;
     public int ShootCount { get => shootCount; }
+    public AudioSource audioSource;
+    public AudioClip hitSound;
 
     private void Start(){
         ballDistance = Vector3.Distance(cam.transform.position, ball.Position)+1;
@@ -71,6 +73,7 @@ public class PlayerController : MonoBehaviour
                 else if(angle > 65) cameraPivot.transform.RotateAround(ball.Position, cam.transform.right, 65-angle);
             }
             if(Input.GetMouseButtonUp(0) && isShooting){
+                audioSource.PlayOneShot(hitSound);
                 ball.AddForce(forceDir*shootForce*forceFactor);
                 shootCount += 1;
                 shootCountText.text = "Shoot Count : " + shootCount;
